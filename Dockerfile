@@ -1,4 +1,4 @@
-FROM ubuntu:zesty
+FROM ubuntu:xenial
 MAINTAINER info@analogic.cz
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -8,23 +8,24 @@ RUN apt-get update && apt-get -y upgrade
 
 RUN apt-get install -y dirmngr && \
 
-    echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu zesty main" >> /etc/apt/sources.list && \
-    echo "deb-src http://ppa.launchpad.net/ondrej/php/ubuntu zesty main"  >> /etc/apt/sources.list && \
+    echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" >> /etc/apt/sources.list.d/php.list && \
+    echo "deb-src http://ppa.launchpad.net/ondrej/php/ubuntu xenial main"  >> /etc/apt/sources.list.d/php.list && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C && \
+
+    echo "deb http://rspamd.com/apt/ xenial main" > /etc/apt/sources.list.d/rspamd.list && \
+    echo "deb-src http://rspamd.com/apt/ xenial main" >> /etc/apt/sources.list.d/rspamd.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FFA232EDBF21E25E && \
 
     apt-get update && \
 
     ########### base ###########
-    apt-get -y --no-install-recommends install locales busybox-syslogd nano \
-
-    ########### qpsmtpd ###########
-    libnet-dns-perl libmailtools-perl libmail-dkim-perl libmail-spf-perl libgeo-ip-perl libclamav-client-perl libipc-shareable-perl libdbi-perl libdbd-sqlite3-perl libarchive-zip-perl libmime-tools-perl \
-
-    ########### qpsmtpd-dmarc ###########
-    libcgi-pm-perl libxml-libxml-perl \
+    apt-get -y --no-install-recommends install locales busybox-syslogd nano bsdtar \
 
     ########### dovecot ###########
     dovecot-core dovecot-imapd dovecot-pop3d dovecot-sqlite dovecot-sieve dovecot-managesieved \
+
+    ########### rspamd ###########
+    rspamd \
 
     ########### clamav ###########
     clamav-daemon \
