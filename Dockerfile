@@ -25,13 +25,10 @@ RUN apt-get install -y dirmngr && \
     dovecot-core dovecot-imapd dovecot-pop3d dovecot-sqlite dovecot-sieve dovecot-managesieved \
 
     ########### rspamd ###########
-    rspamd \
+    # rspamd not yet \
 
     ########### clamav ###########
     clamav-daemon \
-
-    ########### spamassassin ###########
-    spamassassin pyzor \
 
     ########### sqlite ###########
     sqlite3 \
